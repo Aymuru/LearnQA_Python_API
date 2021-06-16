@@ -1,1 +1,1 @@
-print("Hello from Anna Zavyazkina1236789uuuuuu!")
+print("Hello from Anna Zavyazkina!")
