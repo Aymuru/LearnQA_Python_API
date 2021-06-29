@@ -2,7 +2,7 @@ import requests
 
 # Задание1
 response1 = requests.get("https://playground.learnqa.ru/ajax/api/compare_query_type")
-print("Задание 1: ", response1, response1.text, "---- Ответ 200, но метод неверный")
+print("Задание 1: ", response1, response1.text, "---- Ответ 200, но успеха нет, так как не передан параметр")
 print("")
 
 # Задание2
