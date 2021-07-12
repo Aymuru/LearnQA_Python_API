@@ -1,7 +1,6 @@
 import requests
 import pytest
 
-
 class TestUserAgent:
     agents = [
         ("Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"),
@@ -32,21 +31,24 @@ class TestUserAgent:
         ("iPhone")
     ]
 
-    @pytest.mark.parametrize('agent, platform', [agents, platforms])
-    def test_agent_check(self, agent, platform):
-        # agent1 = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"
+    ListUnion = list(zip(agents, platforms, browsers, devices))
+
+    @pytest.mark.parametrize('agent, platform, browser, device', ListUnion)
+    def test_agent_check(self, agent, platform, browser, device):
         response1 = requests.get("https://playground.learnqa.ru/ajax/api/user_agent_check",
                                  headers={"User-Agent": agent})
 
-        compare_dict_1 = response1.json()
+        actual_dict_1 = response1.json()
         expected_dict_1 = {
             "user_agent": agent,
             "platform": platform,
-            "browser": "No",
-            "device": "Android"
+            "browser": browser,
+            "device": device
         }
 
-        value1_1 = {k: expected_dict_1[k] for k, _ in set(expected_dict_1.items()) - set(compare_dict_1.items())}
-        value1_2 = {k: compare_dict_1[k] for k, _ in set(expected_dict_1.items()) - set(compare_dict_1.items())}
-        assert value1_1 == {}, f"The difference in data of UserAgent: Expected - {value1_1}, Actual - {value1_2}."
+        value1_1 = {k: expected_dict_1[k] for k, _ in set(expected_dict_1.items()) - set(actual_dict_1.items())}
+        value1_2 = {k: actual_dict_1[k] for k, _ in set(expected_dict_1.items()) - set(actual_dict_1.items())}
+        new_list = [value1_1, value1_2]
+        print(new_list)
+        assert value1_1 == value1_2, f"The difference in data of UserAgent: Expected - {value1_1}, Actual - {value1_2}."
 
