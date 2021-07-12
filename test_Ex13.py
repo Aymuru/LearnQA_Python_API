@@ -48,7 +48,6 @@ class TestUserAgent:
 
         value1_1 = {k: expected_dict_1[k] for k, _ in set(expected_dict_1.items()) - set(actual_dict_1.items())}
         value1_2 = {k: actual_dict_1[k] for k, _ in set(expected_dict_1.items()) - set(actual_dict_1.items())}
-        new_list = [value1_1, value1_2]
-        print(new_list)
-        assert value1_1 == value1_2, f"The difference in data of UserAgent: Expected - {value1_1}, Actual - {value1_2}."
+
+        assert value1_1 == value1_2, f"The difference in data of UserAgent: UserAgent --- {agent} ----- Expected - {value1_1}, Actual - {value1_2}."
 
