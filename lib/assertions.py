@@ -57,10 +57,22 @@ class Assertions:
             f"Unexpected status code! Expected: {expected_status_code}. Actual: {response.status_code}"
 
     @staticmethod
-    def assert_no_add_symbol_in_email(response: Response, symbol):
-        try:
-            exist = response.json()['email']
-        except json.JSONDecodeError:
-            assert False, f"Response is not a JSON format. Response text is '{response.text}'"
+    def assert_no_add_symbol_in_email(email, symbol):
+        assert symbol in email, f"Email doesn't have symbol '{symbol}'"
 
-        assert symbol in exist, f"Email doesn't have symbol '{symbol}'"
+    @staticmethod
+    def assert_wrong_data(response: Response):
+        empty_fields = "The following required params are missed:"
+        assert empty_fields in response.text, f"The user is created. User id: {response.text} "
+
+    @staticmethod
+    def assert_short_name(response: Response, name):
+        firstName_field = "The value of 'firstName' field is too short"
+        name_len = len(name)
+        assert firstName_field in response.text, f"The user is created, name's length = {name_len}, Expected: less than 2 symbols. User id: {response.text} "
+
+    @staticmethod
+    def assert_long_name(response: Response, name):
+        firstName_field = "The value of 'firstName' field is too long"
+        name_len = len(name)
+        assert firstName_field in response.text, f"The user is created, name's length = {name_len}, Expected: more than 250 symbols. User id: {response.text} "

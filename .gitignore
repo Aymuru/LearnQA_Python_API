@@ -130,3 +130,6 @@ dmypy.json
 .idea/
 .pytest_cache
 __pycache__/
+
+#my
+lib/__pycache__/
