@@ -76,3 +76,23 @@ class Assertions:
         firstName_field = "The value of 'firstName' field is too long"
         name_len = len(name)
         assert firstName_field in response.text, f"The user is created, name's length = {name_len}, Expected: more than 250 symbols. User id: {response.text} "
+
+    @staticmethod
+    def assert_change_data_of_not_auth_user(response: Response):
+        change_field = "Auth token not supplied"
+        assert change_field in response.text, f"The user is authorized, but token not supplied."
+
+    @staticmethod
+    def assert_change_data_by_different_user(response: Response, previous, new):
+        assert previous != new, f"Data was changed, but user is not authorized."
+
+    @staticmethod
+    def assert_change_into_wrong_email(response: Response):
+        invalid_email = "Invalid email format"
+        assert invalid_email in response.text, "Email was changed, but has incorrect format"
+
+    @staticmethod
+    def assert_change_into_short_name(response: Response, name):
+        invalid_name = "Too short value for field firstName"
+        name_len = len(name)
+        assert invalid_name in response.text, f"FirstName was changed, name's length = {name_len}, Expected: less than 2 symbols."
