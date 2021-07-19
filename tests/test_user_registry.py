@@ -1,4 +1,4 @@
-import requests
+from lib.my_requests import MyRequests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 
@@ -7,7 +7,7 @@ class TestUserRegistry(BaseCase):
     def test_create_user_successfully(self):
         data = self.prepare_registration_data()
 
-        response = requests.post("https://playground.learnqa.ru/api/user/", data=data)
+        response = MyRequests.post("/user/", data=data)
 
         Assertions.assert_code_status(response, 200)
         Assertions.assert_json_has_key(response, "id")
@@ -17,7 +17,7 @@ class TestUserRegistry(BaseCase):
         email = 'vinkotov@example.com'
         data = self.prepare_registration_data(email)
 
-        response = requests.post("https://playground.learnqa.ru/api/user/", data=data)
+        response = MyRequests.post("/user/", data=data)
 
         Assertions.assert_code_status(response, 400)
         assert response.content.decode("utf-8") == f"Users with email '{email}' already exists", \
@@ -36,7 +36,7 @@ class TestUserRegistry(BaseCase):
             'email': self.prepare_registration_data()['email']
         }
 
-        response = requests.post("https://playground.learnqa.ru/api/user/", data=data)
+        response = MyRequests.post("/user/", data=data)
         Assertions.assert_wrong_data(response)
 
     def test_short_firstName(self):
@@ -48,7 +48,7 @@ class TestUserRegistry(BaseCase):
             'email': self.prepare_registration_data()['email']
         }
 
-        response = requests.post("https://playground.learnqa.ru/api/user/", data=data)
+        response = MyRequests.post("/user/", data=data)
         Assertions.assert_short_name(response, data['firstName'])
 
     def test_long_firstName(self):
@@ -63,6 +63,6 @@ class TestUserRegistry(BaseCase):
             'email': self.prepare_registration_data()['email']
         }
 
-        response = requests.post("https://playground.learnqa.ru/api/user/", data=data)
+        response = MyRequests.post("/user/", data=data)
         Assertions.assert_long_name(response, data['firstName'])
 

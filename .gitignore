@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+lib/__pycache__/
 
 # C extensions
 *.so
@@ -129,7 +130,6 @@ dmypy.json
 .pyre/
 .idea/
 .pytest_cache
-__pycache__/
 
-#my
-lib/__pycache__/
+
+logs/*

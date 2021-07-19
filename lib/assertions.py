@@ -96,3 +96,17 @@ class Assertions:
         invalid_name = "Too short value for field firstName"
         name_len = len(name)
         assert invalid_name in response.text, f"FirstName was changed, name's length = {name_len}, Expected: less than 2 symbols."
+
+    @staticmethod
+    def assert_delete_locked_user(response: Response):
+        error_message = "Please, do not delete test users with ID 1, 2, 3, 4 or 5."
+        assert error_message in response.text, f"You have deleted user with 1-5 ID, which has guarding angel!"
+
+    @staticmethod
+    def assert_delete_user(response: Response):
+        error_message = "User not found"
+        assert error_message in response.text, f"The user you've tried to delete - wasn't deleted."
+
+    @staticmethod
+    def assert_delete_user_by_different_one(response: Response):
+        assert "username" in response.text, f"The user was deleted by other user."
